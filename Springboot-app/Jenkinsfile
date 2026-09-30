@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        ```groovy
+
 stage('SonarQube Analysis') {
     steps {
         dir('Springboot-app') {
@@ -33,7 +33,7 @@ stage('SonarQube Analysis') {
         }
     }
 }
-```
+
 
         stage('Docker Build') {
             steps {
