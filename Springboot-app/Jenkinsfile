@@ -18,21 +18,21 @@ pipeline {
         }
 
 
-stage('SonarQube Analysis') {
-    steps {
-        dir('Springboot-app') {
-            withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                sh '''
-                    mvn clean verify \
-                    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                    -Dsonar.projectKey=springboot-gitops-cicd-pipeline \
-                    -Dsonar.host.url=http://host.docker.internal:9000 \
-                    -Dsonar.token=$SONAR_TOKEN
-                '''
+stage("Sonarqube Analysis "){
+            steps{
+                withSonarQubeEnv('sonar-server') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Netflix \
+                    -Dsonar.projectKey=Netflix '''
+                }
             }
         }
-    }
-}
+        stage("quality gate"){
+           steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                }
+            }
+        }
 
 
         stage('Docker Build') {
