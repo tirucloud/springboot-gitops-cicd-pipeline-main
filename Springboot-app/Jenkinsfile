@@ -17,20 +17,23 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                dir('Springboot-app') {
-                    withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                        sh '''
-                            mvn sonar:sonar \
-                            -Dsonar.projectKey=springboot-gitops-cicd-pipeline \
-                            -Dsonar.host.url=http://host.docker.internal:9000 \
-                            -Dsonar.token=$SONAR_TOKEN
-                        '''
-                    }
-                }
+        ```groovy
+stage('SonarQube Analysis') {
+    steps {
+        dir('Springboot-app') {
+            withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                sh '''
+                    mvn clean verify \
+                    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                    -Dsonar.projectKey=springboot-gitops-cicd-pipeline \
+                    -Dsonar.host.url=http://host.docker.internal:9000 \
+                    -Dsonar.token=$SONAR_TOKEN
+                '''
             }
         }
+    }
+}
+```
 
         stage('Docker Build') {
             steps {
