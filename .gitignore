@@ -1,0 +1,17 @@
+# Maven
+target/
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Java
+*.class
+*.jar
+
+# OS Files
+.DS_Store
+Thumbs.dbSpringboot-app/minikube-linux-amd64
