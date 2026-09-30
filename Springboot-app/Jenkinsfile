@@ -20,7 +20,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 dir('Springboot-app') {
-                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
                         sh '''
                             mvn sonar:sonar \
                             -Dsonar.projectKey=springboot-gitops-cicd-pipeline \
@@ -35,7 +35,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 dir('Springboot-app') {
-                    sh 'docker build -t anuchy/springboot-gitops:${BUILD_NUMBER} .'
+                    sh 'docker build -t tirucloud/springboot-gitops:${BUILD_NUMBER} .'
                 }
             }
         }
@@ -49,7 +49,7 @@ pipeline {
                 )]) {
                     sh '''
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push anuchy/springboot-gitops:${BUILD_NUMBER}
+                        docker push tirucloud/springboot-gitops:${BUILD_NUMBER}
                     '''
                 }
             }
