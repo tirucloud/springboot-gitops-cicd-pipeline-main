@@ -35,24 +35,6 @@ stage('SonarQube Analysis') {
     }
 }
 
-stage('SonarQube Analysis') {
-    steps {
-        dir('Springboot-app') {
-            withSonarQubeEnv('sonar-server') {
-                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                    sh '''
-                        mvn clean verify \
-                        org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                        -Dsonar.projectName=Netflix \
-                        -Dsonar.projectKey=Netflix \
-                        -Dsonar.token=$SONAR_TOKEN
-                    '''
-                }
-            }
-        }
-    }
-}
-
 stage('Quality Gate') {
     steps {
         script {
