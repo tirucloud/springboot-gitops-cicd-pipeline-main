@@ -3,9 +3,9 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Git Checkout') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/tirucloud/springboot-gitops-cicd-pipeline-main.git'
             }
         }
 
@@ -43,7 +43,7 @@ pipeline {
         stage('Docker Push') {
             steps {
                 withCredentials([usernamePassword(
-                    credentialsId: 'dockercredentials',
+                    credentialsId: 'docker-token',
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
