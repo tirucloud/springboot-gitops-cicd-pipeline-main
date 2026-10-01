@@ -65,7 +65,7 @@ Spring Boot Application
 
 - name: sonar-webhook
 - webhook URL: http://jenkins-ip:8080/sonarqube-webhook/
-
+- Create sonar-token
 - http://sonar-ip/account/security
 
 ## Deployment Verification
