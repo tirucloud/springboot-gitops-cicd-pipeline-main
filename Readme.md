@@ -58,6 +58,15 @@ Spring Boot Application
 * Automated Rollouts
 
 ---
+## SONARQUBE
+- http://<sonar-ip>/admin/webhooks
+
+- create webhook
+
+- name: sonar-webhook
+- webhook URL: http://<jenkins-ip>:8080/sonarqube-webhook/
+
+- http://<sonar-ip>/account/security
 
 ## Deployment Verification
 
